@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbh.blog.dao.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.hbh.blog.entity.Message">
+    <id column="message_id" jdbcType="BIGINT" property="messageId" />
+    <result column="message_name" jdbcType="VARCHAR" property="messageName" />
+    <result column="message_mail" jdbcType="VARCHAR" property="messageMail" />
+    <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
+    <result column="article_id" jdbcType="BIGINT" property="articleId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hbh.blog.entity.Message">
+    <result column="message_content" jdbcType="LONGVARCHAR" property="messageContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    message_id, message_name, message_mail, create_by, article_id
+  </sql>
+  <sql id="Blob_Column_List">
+    message_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbh.blog.entity.Message">
+    insert into message (message_id, message_name, message_mail, 
+      create_by, article_id, message_content
+      )
+    values (#{messageId,jdbcType=BIGINT}, #{messageName,jdbcType=VARCHAR}, #{messageMail,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=TIMESTAMP}, #{articleId,jdbcType=BIGINT}, #{messageContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbh.blog.entity.Message">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        message_id,
+      </if>
+      <if test="messageName != null">
+        message_name,
+      </if>
+      <if test="messageMail != null">
+        message_mail,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="messageContent != null">
+        message_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        #{messageId,jdbcType=BIGINT},
+      </if>
+      <if test="messageName != null">
+        #{messageName,jdbcType=VARCHAR},
+      </if>
+      <if test="messageMail != null">
+        #{messageMail,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleId != null">
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="messageContent != null">
+        #{messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.blog.entity.Message">
+    update message
+    <set>
+      <if test="messageName != null">
+        message_name = #{messageName,jdbcType=VARCHAR},
+      </if>
+      <if test="messageMail != null">
+        message_mail = #{messageMail,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleId != null">
+        article_id = #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="messageContent != null">
+        message_content = #{messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hbh.blog.entity.Message">
+    update message
+    set message_name = #{messageName,jdbcType=VARCHAR},
+      message_mail = #{messageMail,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=TIMESTAMP},
+      article_id = #{articleId,jdbcType=BIGINT},
+      message_content = #{messageContent,jdbcType=LONGVARCHAR}
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbh.blog.entity.Message">
+    update message
+    set message_name = #{messageName,jdbcType=VARCHAR},
+      message_mail = #{messageMail,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=TIMESTAMP},
+      article_id = #{articleId,jdbcType=BIGINT}
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+</mapper>

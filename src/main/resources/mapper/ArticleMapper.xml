@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbh.blog.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.hbh.blog.entity.Article">
+    <id column="article_id" jdbcType="BIGINT" property="articleId" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="article_tag_id" jdbcType="BIGINT" property="articleTagId" />
+    <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
+    <result column="modifield_by" jdbcType="TIMESTAMP" property="modifieldBy" />
+    <result column="yxbz" jdbcType="CHAR" property="yxbz" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hbh.blog.entity.Article">
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    article_id, article_title, article_tag_id, create_by, modifield_by, yxbz
+  </sql>
+  <sql id="Blob_Column_List">
+    article_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where article_id = #{articleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from article
+    where article_id = #{articleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbh.blog.entity.Article">
+    insert into article (article_id, article_title, article_tag_id, 
+      create_by, modifield_by, yxbz, 
+      article_content)
+    values (#{articleId,jdbcType=BIGINT}, #{articleTitle,jdbcType=VARCHAR}, #{articleTagId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=TIMESTAMP}, #{modifieldBy,jdbcType=TIMESTAMP}, #{yxbz,jdbcType=CHAR}, 
+      #{articleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbh.blog.entity.Article">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="articleTagId != null">
+        article_tag_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="modifieldBy != null">
+        modifield_by,
+      </if>
+      <if test="yxbz != null">
+        yxbz,
+      </if>
+      <if test="articleContent != null">
+        article_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleTagId != null">
+        #{articleTagId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifieldBy != null">
+        #{modifieldBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yxbz != null">
+        #{yxbz,jdbcType=CHAR},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.blog.entity.Article">
+    update article
+    <set>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleTagId != null">
+        article_tag_id = #{articleTagId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifieldBy != null">
+        modifield_by = #{modifieldBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yxbz != null">
+        yxbz = #{yxbz,jdbcType=CHAR},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hbh.blog.entity.Article">
+    update article
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_tag_id = #{articleTagId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=TIMESTAMP},
+      modifield_by = #{modifieldBy,jdbcType=TIMESTAMP},
+      yxbz = #{yxbz,jdbcType=CHAR},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR}
+    where article_id = #{articleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbh.blog.entity.Article">
+    update article
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_tag_id = #{articleTagId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=TIMESTAMP},
+      modifield_by = #{modifieldBy,jdbcType=TIMESTAMP},
+      yxbz = #{yxbz,jdbcType=CHAR}
+    where article_id = #{articleId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbh.blog.dao.BookMapper">
+  <resultMap id="BaseResultMap" type="com.hbh.blog.entity.Book">
+    <id column="book_id" jdbcType="BIGINT" property="bookId" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
+    <result column="modified_by" jdbcType="TIMESTAMP" property="modifiedBy" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hbh.blog.entity.Book">
+    <result column="book_content" jdbcType="LONGVARCHAR" property="bookContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    book_id, book_name, create_by, modified_by
+  </sql>
+  <sql id="Blob_Column_List">
+    book_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from book
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from book
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hbh.blog.entity.Book">
+    insert into book (book_id, book_name, create_by, 
+      modified_by, book_content)
+    values (#{bookId,jdbcType=BIGINT}, #{bookName,jdbcType=VARCHAR}, #{createBy,jdbcType=TIMESTAMP}, 
+      #{modifiedBy,jdbcType=TIMESTAMP}, #{bookContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbh.blog.entity.Book">
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="bookName != null">
+        book_name,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="modifiedBy != null">
+        modified_by,
+      </if>
+      <if test="bookContent != null">
+        book_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookId != null">
+        #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="bookName != null">
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null">
+        #{modifiedBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookContent != null">
+        #{bookContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.blog.entity.Book">
+    update book
+    <set>
+      <if test="bookName != null">
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null">
+        modified_by = #{modifiedBy,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookContent != null">
+        book_content = #{bookContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hbh.blog.entity.Book">
+    update book
+    set book_name = #{bookName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=TIMESTAMP},
+      modified_by = #{modifiedBy,jdbcType=TIMESTAMP},
+      book_content = #{bookContent,jdbcType=LONGVARCHAR}
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbh.blog.entity.Book">
+    update book
+    set book_name = #{bookName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=TIMESTAMP},
+      modified_by = #{modifiedBy,jdbcType=TIMESTAMP}
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+</mapper>

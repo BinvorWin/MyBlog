@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html class="loginHtml">
+<header  th:include="admin/header :: header">
+    <meta charset="utf-8">
+    <title>登录</title>
+</header>
+<body class="loginBody">
+<form class="layui-form">
+    <div class="login_face"><img th:src="@{/images/Binvor.jpg}" class="userAvatar"></div>
+    <div class="layui-form-item input-item">
+        <label for="userName">用户名</label>
+        <input type="text" placeholder="请输入用户名" autocomplete="off" id="userName" class="layui-input" lay-verify="required">
+    </div>
+    <div class="layui-form-item input-item">
+        <label for="password">密码</label>
+        <input type="password" placeholder="请输入密码" autocomplete="off" id="password" class="layui-input" lay-verify="required">
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>
+    </div>
+</form>
+</body>
+<footer th:include="admin/footer :: footer"></footer>
+<script type="text/javascript" th:src="@{/localjs/login.js}"></script>
+</html>
