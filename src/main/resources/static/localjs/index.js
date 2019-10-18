@@ -1,3 +1,4 @@
+/*
 var $,tab,dataStr,layer;
 layui.config({
 	base : "js/"
@@ -164,4 +165,4 @@ function showImg(){
             anim: 5
         });
     });
-}
+}*/

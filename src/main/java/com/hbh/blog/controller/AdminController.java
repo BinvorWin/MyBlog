@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +20,6 @@ import javax.servlet.http.HttpSession;
  * @Des:管理员控制器
  */
 @Controller
-@RequestMapping("admin")
 public class AdminController {
 
     private static Logger logger = Logger.getLogger(AdminController.class);
@@ -29,19 +30,22 @@ public class AdminController {
         logger.info("登陆.......................");
         return "admin/login";
     }
-    @RequestMapping("doLogin")
+    @RequestMapping("/doLogin")
     public String dologin(String account,String pwd, HttpSession session){
+        logger.debug(account+pwd);
+        String msg="";
         String name =iAdminService.login(account,pwd);
         if(StringUtils.isNotBlank(name)){
             session.setAttribute("account",account);
             session.setAttribute("name",name);
-            return "redirect:/admin/index";
+            msg="登录成功";
+            return "/admin/index";
         }else{
-            String errorMsg="账号密码不正确，请重新登陆";
-            return "admin/login";
+           msg="账号密码不正确，请重新登陆";
+            return JsonResultUtil.getErrorResponse(msg);
         }
     }
-    @RequestMapping("update")
+    @RequestMapping("/update")
     public String update(HttpServletRequest request,String pwd,String name){
         int count =0;
         String msg="";
@@ -58,7 +62,7 @@ public class AdminController {
             return JsonResultUtil.getErrorResponse(msg);
         }
     }
-    @RequestMapping("logout")
+    @RequestMapping("/logout")
     public String logout(HttpSession session){
         session.removeAttribute("account");
         session.removeAttribute("name");
