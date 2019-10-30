@@ -17,34 +17,6 @@ layui.use(['form','jquery',"layer"],function() {
 
 
 
-    $(".lockcms").on("click",function(){
-        window.sessionStorage.setItem("lockcms",true);
-        lockPage();
-    })
-
-    // 解锁
-    $("body").on("click","#unlock",function(){
-        if($(this).siblings(".admin-header-lock-input").val() == ''){
-            layer.msg("请输入解锁密码！");
-            $(this).siblings(".admin-header-lock-input").focus();
-        }else{
-            if($(this).siblings(".admin-header-lock-input").val() == "123456"){
-                window.sessionStorage.setItem("lockcms",false);
-                $(this).siblings(".admin-header-lock-input").val('');
-                layer.closeAll("page");
-            }else{
-                layer.msg("密码错误，请重新输入！");
-                $(this).siblings(".admin-header-lock-input").val('').focus();
-            }
-        }
-    });
-    $(document).on('keydown', function(event) {
-        var event = event || window.event;
-        if(event.keyCode == 13) {
-            $("#unlock").click();
-        }
-    });
-
     //退出
     $(".signOut").click(function(){
         window.sessionStorage.removeItem("menu");
@@ -115,11 +87,6 @@ layui.use(['form','jquery',"layer"],function() {
         })
     })
 
-    //判断是否修改过系统基本设置，去显示底部版权信息
-    if(window.sessionStorage.getItem("systemParameter")){
-        systemParameter = JSON.parse(window.sessionStorage.getItem("systemParameter"));
-        $(".footer p span").text(systemParameter.powerby);
-    }
 
     //更换皮肤
     function skins(){

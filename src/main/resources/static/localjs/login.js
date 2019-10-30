@@ -19,29 +19,4 @@ layui.use(['form','layer','jquery'],function(){
             $(this).parent().removeClass("layui-input-active");
         }
     })
-    $("#login").click(function () {
-        var account=$("#userName").val();
-        var pwd=$("#password").val();
-        $.ajax({
-            type: "post",
-            url: "/doLogin",
-            datatype:"json",
-            synchronized:true,
-            data: {account: account, pwd: pwd},
-            success: function (result) {
-                console.log(result);
-                var replyCode = $(result).find("code").text();
-                /*if(replyCode=="0"){
-                    window.location.href = 'admin/index';
-                }*/
-                if(replyCode=="1"){
-                    alert("重新登陆");
-                    layer.alert($(result).find("msg").text());
-                }
-        },
-            error:function () {
-                layer.alert("失败");
-            }
-        })
-    })
 })

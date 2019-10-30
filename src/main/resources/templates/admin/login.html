@@ -6,18 +6,18 @@
     <title>登录</title>
 </header>
 <body class="loginBody">
-<form class="layui-form" >
+<form class="layui-form" action="/admin/doLogin" method="post">
     <div class="login_face"><img th:src="@{/images/Binvor.jpg}" class="userAvatar"></div>
     <div class="layui-form-item input-item">
-        <label for="userName">用户名</label>
-        <input type="text" placeholder="请输入用户名"  id="userName" class="layui-input" lay-verify="required">
+        <label for="account">用户名</label>
+        <input type="text" placeholder="请输入用户名" name="account" id="account" class="layui-input" lay-verify="required">
     </div>
     <div class="layui-form-item input-item">
-        <label for="password">密码</label>
-        <input type="password" placeholder="请输入密码"  id="password" class="layui-input" lay-verify="required">
+        <label for="pwd">密码</label>
+        <input type="password" placeholder="请输入密码" name="pwd" id="pwd" class="layui-input" lay-verify="required">
     </div>
     <div class="layui-form-item">
-        <button class="layui-btn layui-block"  id="login">登录</button>
+        <button class="layui-btn layui-block" lay-submit id="login">登录</button>
     </div>
 </form>
 </body>
